@@ -1,0 +1,545 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="abidatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Applicants">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="last_name" Type="varchar" MaxLength="255" />
+          <Property Name="first_name" Type="varchar" MaxLength="255" />
+          <Property Name="middle_name" Type="varchar" MaxLength="255" />
+          <Property Name="date_of_birth" Type="date" />
+          <Property Name="gender" Type="varchar" MaxLength="255" />
+          <Property Name="address" Type="varchar" MaxLength="255" />
+          <Property Name="phone_number" Type="varchar" MaxLength="255" />
+          <Property Name="email" Type="varchar" MaxLength="255" />
+          <Property Name="average_score" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="recommendations" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Applications">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="applicant_id" Type="int" />
+          <Property Name="specialty_id" Type="int" />
+          <Property Name="priority" Type="int" />
+        </EntityType>
+        <EntityType Name="Documents">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="applicant_id" Type="int" />
+          <Property Name="type" Type="varchar" MaxLength="255" />
+          <Property Name="series" Type="varchar" MaxLength="255" />
+          <Property Name="number" Type="varchar" MaxLength="255" />
+          <Property Name="date_of_issue" Type="date" />
+          <Property Name="issuing_authority" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Entrance_Exams">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="applicant_id" Type="int" />
+          <Property Name="subject_id" Type="int" />
+          <Property Name="score" Type="decimal" Precision="5" Scale="2" />
+        </EntityType>
+        <EntityType Name="Specialties">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="ZNO_Results">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="applicant_id" Type="int" />
+          <Property Name="subject_id" Type="int" />
+          <Property Name="score" Type="decimal" Precision="5" Scale="2" />
+        </EntityType>
+        <Association Name="FK__Applicati__appli__46E78A0C">
+          <End Role="Applicants" Type="Self.Applicants" Multiplicity="0..1" />
+          <End Role="Applications" Type="Self.Applications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Applicants">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Applications">
+              <PropertyRef Name="applicant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Applicati__speci__47DBAE45">
+          <End Role="Specialties" Type="Self.Specialties" Multiplicity="0..1" />
+          <End Role="Applications" Type="Self.Applications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specialties">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Applications">
+              <PropertyRef Name="specialty_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documents__appli__4222D4EF">
+          <End Role="Applicants" Type="Self.Applicants" Multiplicity="0..1" />
+          <End Role="Documents" Type="Self.Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Applicants">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Documents">
+              <PropertyRef Name="applicant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Entrance___appli__3E52440B">
+          <End Role="Applicants" Type="Self.Applicants" Multiplicity="0..1" />
+          <End Role="Entrance_Exams" Type="Self.Entrance_Exams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Applicants">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Entrance_Exams">
+              <PropertyRef Name="applicant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Entrance___subje__3F466844">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="0..1" />
+          <End Role="Entrance_Exams" Type="Self.Entrance_Exams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Entrance_Exams">
+              <PropertyRef Name="subject_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ZNO_Resul__appli__3A81B327">
+          <End Role="Applicants" Type="Self.Applicants" Multiplicity="0..1" />
+          <End Role="ZNO_Results" Type="Self.ZNO_Results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Applicants">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ZNO_Results">
+              <PropertyRef Name="applicant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ZNO_Resul__subje__3B75D760">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="0..1" />
+          <End Role="ZNO_Results" Type="Self.ZNO_Results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ZNO_Results">
+              <PropertyRef Name="subject_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="abidatModelStoreContainer">
+          <EntitySet Name="Applicants" EntityType="Self.Applicants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Applications" EntityType="Self.Applications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Entrance_Exams" EntityType="Self.Entrance_Exams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Specialties" EntityType="Self.Specialties" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ZNO_Results" EntityType="Self.ZNO_Results" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Applicati__appli__46E78A0C" Association="Self.FK__Applicati__appli__46E78A0C">
+            <End Role="Applicants" EntitySet="Applicants" />
+            <End Role="Applications" EntitySet="Applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Applicati__speci__47DBAE45" Association="Self.FK__Applicati__speci__47DBAE45">
+            <End Role="Specialties" EntitySet="Specialties" />
+            <End Role="Applications" EntitySet="Applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documents__appli__4222D4EF" Association="Self.FK__Documents__appli__4222D4EF">
+            <End Role="Applicants" EntitySet="Applicants" />
+            <End Role="Documents" EntitySet="Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Entrance___appli__3E52440B" Association="Self.FK__Entrance___appli__3E52440B">
+            <End Role="Applicants" EntitySet="Applicants" />
+            <End Role="Entrance_Exams" EntitySet="Entrance_Exams" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Entrance___subje__3F466844" Association="Self.FK__Entrance___subje__3F466844">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Entrance_Exams" EntitySet="Entrance_Exams" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ZNO_Resul__appli__3A81B327" Association="Self.FK__ZNO_Resul__appli__3A81B327">
+            <End Role="Applicants" EntitySet="Applicants" />
+            <End Role="ZNO_Results" EntitySet="ZNO_Results" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ZNO_Resul__subje__3B75D760" Association="Self.FK__ZNO_Resul__subje__3B75D760">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="ZNO_Results" EntitySet="ZNO_Results" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="abidatModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Applicant">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="middle_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="date_of_birth" Type="DateTime" Precision="0" />
+          <Property Name="gender" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="phone_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="average_score" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="recommendations" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Applications" Relationship="Self.FK__Applicati__appli__46E78A0C" FromRole="Applicants" ToRole="Applications" />
+          <NavigationProperty Name="Documents" Relationship="Self.FK__Documents__appli__4222D4EF" FromRole="Applicants" ToRole="Documents" />
+          <NavigationProperty Name="Entrance_Exams" Relationship="Self.FK__Entrance___appli__3E52440B" FromRole="Applicants" ToRole="Entrance_Exams" />
+          <NavigationProperty Name="ZNO_Results" Relationship="Self.FK__ZNO_Resul__appli__3A81B327" FromRole="Applicants" ToRole="ZNO_Results" />
+        </EntityType>
+        <EntityType Name="Application">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="applicant_id" Type="Int32" />
+          <Property Name="specialty_id" Type="Int32" />
+          <Property Name="priority" Type="Int32" />
+          <NavigationProperty Name="Applicant" Relationship="Self.FK__Applicati__appli__46E78A0C" FromRole="Applications" ToRole="Applicants" />
+          <NavigationProperty Name="Specialty" Relationship="Self.FK__Applicati__speci__47DBAE45" FromRole="Applications" ToRole="Specialties" />
+        </EntityType>
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="applicant_id" Type="Int32" />
+          <Property Name="type" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="series" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="date_of_issue" Type="DateTime" Precision="0" />
+          <Property Name="issuing_authority" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Applicant" Relationship="Self.FK__Documents__appli__4222D4EF" FromRole="Documents" ToRole="Applicants" />
+        </EntityType>
+        <EntityType Name="Entrance_Exams">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="applicant_id" Type="Int32" />
+          <Property Name="subject_id" Type="Int32" />
+          <Property Name="score" Type="Decimal" Precision="5" Scale="2" />
+          <NavigationProperty Name="Applicant" Relationship="Self.FK__Entrance___appli__3E52440B" FromRole="Entrance_Exams" ToRole="Applicants" />
+          <NavigationProperty Name="Subject" Relationship="Self.FK__Entrance___subje__3F466844" FromRole="Entrance_Exams" ToRole="Subjects" />
+        </EntityType>
+        <EntityType Name="Specialty">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Applications" Relationship="Self.FK__Applicati__speci__47DBAE45" FromRole="Specialties" ToRole="Applications" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Entrance_Exams" Relationship="Self.FK__Entrance___subje__3F466844" FromRole="Subjects" ToRole="Entrance_Exams" />
+          <NavigationProperty Name="ZNO_Results" Relationship="Self.FK__ZNO_Resul__subje__3B75D760" FromRole="Subjects" ToRole="ZNO_Results" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="ZNO_Results">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="applicant_id" Type="Int32" />
+          <Property Name="subject_id" Type="Int32" />
+          <Property Name="score" Type="Decimal" Precision="5" Scale="2" />
+          <NavigationProperty Name="Applicant" Relationship="Self.FK__ZNO_Resul__appli__3A81B327" FromRole="ZNO_Results" ToRole="Applicants" />
+          <NavigationProperty Name="Subject" Relationship="Self.FK__ZNO_Resul__subje__3B75D760" FromRole="ZNO_Results" ToRole="Subjects" />
+        </EntityType>
+        <Association Name="FK__Applicati__appli__46E78A0C">
+          <End Role="Applicants" Type="Self.Applicant" Multiplicity="0..1" />
+          <End Role="Applications" Type="Self.Application" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Applicants">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Applications">
+              <PropertyRef Name="applicant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documents__appli__4222D4EF">
+          <End Role="Applicants" Type="Self.Applicant" Multiplicity="0..1" />
+          <End Role="Documents" Type="Self.Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Applicants">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Documents">
+              <PropertyRef Name="applicant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Entrance___appli__3E52440B">
+          <End Role="Applicants" Type="Self.Applicant" Multiplicity="0..1" />
+          <End Role="Entrance_Exams" Type="Self.Entrance_Exams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Applicants">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Entrance_Exams">
+              <PropertyRef Name="applicant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ZNO_Resul__appli__3A81B327">
+          <End Role="Applicants" Type="Self.Applicant" Multiplicity="0..1" />
+          <End Role="ZNO_Results" Type="Self.ZNO_Results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Applicants">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ZNO_Results">
+              <PropertyRef Name="applicant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Applicati__speci__47DBAE45">
+          <End Role="Specialties" Type="Self.Specialty" Multiplicity="0..1" />
+          <End Role="Applications" Type="Self.Application" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specialties">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Applications">
+              <PropertyRef Name="specialty_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Entrance___subje__3F466844">
+          <End Role="Subjects" Type="Self.Subject" Multiplicity="0..1" />
+          <End Role="Entrance_Exams" Type="Self.Entrance_Exams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Entrance_Exams">
+              <PropertyRef Name="subject_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ZNO_Resul__subje__3B75D760">
+          <End Role="Subjects" Type="Self.Subject" Multiplicity="0..1" />
+          <End Role="ZNO_Results" Type="Self.ZNO_Results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ZNO_Results">
+              <PropertyRef Name="subject_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="abidatEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Applicants" EntityType="Self.Applicant" />
+          <EntitySet Name="Applications" EntityType="Self.Application" />
+          <EntitySet Name="Documents" EntityType="Self.Document" />
+          <EntitySet Name="Entrance_Exams" EntityType="Self.Entrance_Exams" />
+          <EntitySet Name="Specialties" EntityType="Self.Specialty" />
+          <EntitySet Name="Subjects" EntityType="Self.Subject" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="ZNO_Results" EntityType="Self.ZNO_Results" />
+          <AssociationSet Name="FK__Applicati__appli__46E78A0C" Association="Self.FK__Applicati__appli__46E78A0C">
+            <End Role="Applicants" EntitySet="Applicants" />
+            <End Role="Applications" EntitySet="Applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documents__appli__4222D4EF" Association="Self.FK__Documents__appli__4222D4EF">
+            <End Role="Applicants" EntitySet="Applicants" />
+            <End Role="Documents" EntitySet="Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Entrance___appli__3E52440B" Association="Self.FK__Entrance___appli__3E52440B">
+            <End Role="Applicants" EntitySet="Applicants" />
+            <End Role="Entrance_Exams" EntitySet="Entrance_Exams" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ZNO_Resul__appli__3A81B327" Association="Self.FK__ZNO_Resul__appli__3A81B327">
+            <End Role="Applicants" EntitySet="Applicants" />
+            <End Role="ZNO_Results" EntitySet="ZNO_Results" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Applicati__speci__47DBAE45" Association="Self.FK__Applicati__speci__47DBAE45">
+            <End Role="Specialties" EntitySet="Specialties" />
+            <End Role="Applications" EntitySet="Applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Entrance___subje__3F466844" Association="Self.FK__Entrance___subje__3F466844">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Entrance_Exams" EntitySet="Entrance_Exams" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ZNO_Resul__subje__3B75D760" Association="Self.FK__ZNO_Resul__subje__3B75D760">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="ZNO_Results" EntitySet="ZNO_Results" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="abidatModelStoreContainer" CdmEntityContainer="abidatEntities">
+          <EntitySetMapping Name="Applicants">
+            <EntityTypeMapping TypeName="abidatModel.Applicant">
+              <MappingFragment StoreEntitySet="Applicants">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+                <ScalarProperty Name="date_of_birth" ColumnName="date_of_birth" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="average_score" ColumnName="average_score" />
+                <ScalarProperty Name="recommendations" ColumnName="recommendations" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Applications">
+            <EntityTypeMapping TypeName="abidatModel.Application">
+              <MappingFragment StoreEntitySet="Applications">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="applicant_id" ColumnName="applicant_id" />
+                <ScalarProperty Name="specialty_id" ColumnName="specialty_id" />
+                <ScalarProperty Name="priority" ColumnName="priority" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Documents">
+            <EntityTypeMapping TypeName="abidatModel.Document">
+              <MappingFragment StoreEntitySet="Documents">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="applicant_id" ColumnName="applicant_id" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="series" ColumnName="series" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="date_of_issue" ColumnName="date_of_issue" />
+                <ScalarProperty Name="issuing_authority" ColumnName="issuing_authority" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Entrance_Exams">
+            <EntityTypeMapping TypeName="abidatModel.Entrance_Exams">
+              <MappingFragment StoreEntitySet="Entrance_Exams">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="applicant_id" ColumnName="applicant_id" />
+                <ScalarProperty Name="subject_id" ColumnName="subject_id" />
+                <ScalarProperty Name="score" ColumnName="score" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Specialties">
+            <EntityTypeMapping TypeName="abidatModel.Specialty">
+              <MappingFragment StoreEntitySet="Specialties">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="abidatModel.Subject">
+              <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="abidatModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ZNO_Results">
+            <EntityTypeMapping TypeName="abidatModel.ZNO_Results">
+              <MappingFragment StoreEntitySet="ZNO_Results">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="applicant_id" ColumnName="applicant_id" />
+                <ScalarProperty Name="subject_id" ColumnName="subject_id" />
+                <ScalarProperty Name="score" ColumnName="score" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

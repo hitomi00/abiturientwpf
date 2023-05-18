@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="191ba5f32757422eb53d9d9fbf1da17b" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="abidatModel.Applicant" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="abidatModel.Application" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="abidatModel.Document" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="abidatModel.Entrance_Exams" Width="1.5" PointX="6" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="abidatModel.Specialty" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="abidatModel.Subject" Width="1.5" PointX="3.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="abidatModel.sysdiagram" Width="1.5" PointX="8.875" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="abidatModel.ZNO_Results" Width="1.5" PointX="6" PointY="3" IsExpanded="true" />
+        <AssociationConnector Association="abidatModel.FK__Applicati__appli__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="abidatModel.FK__Documents__appli__4222D4EF" ManuallyRouted="false" />
+        <AssociationConnector Association="abidatModel.FK__Entrance___appli__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="abidatModel.FK__ZNO_Resul__appli__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="abidatModel.FK__Applicati__speci__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="abidatModel.FK__Entrance___subje__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="abidatModel.FK__ZNO_Resul__subje__3B75D760" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
